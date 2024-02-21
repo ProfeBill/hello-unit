@@ -9,6 +9,11 @@ def calcPayment(purchase_amount,interest_rate,num_payments):
 
     El resultado no esta redondeado
     """
+
+    # Verificamos que la tasa de interes no se a mayor que 3.8% mensual
+    if interest_rate > ( 3.8/100 ) :
+       raise Exception( "ERROR: La tasa de interes supera el máximo" )
+
     i = interest_rate
     return (purchase_amount * i) / (1 - (1 + i) ** (-num_payments))
 
