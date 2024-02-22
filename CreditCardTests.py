@@ -38,7 +38,7 @@ class CreditCardTest(unittest.TestCase):
             result = PaymentLogic.calcPayment( purchase_amount, interest_rate, num_payments )
             print("No ocurrió ningun excepcion")
             testOk = False
-        except:
+        except PaymentLogic.ExcesiveInterestError :
             # Aqui llega el control cuando se genera una excepcion
             print("SI ocurrio la excepcion")
             testOk = True
@@ -52,7 +52,17 @@ class CreditCardTest(unittest.TestCase):
         interest_rate = 0.124
 
         # Verifica en una linea si una funcion dispara una excepcion
-        self.assertRaises( Exception, PaymentLogic.calcPayment, purchase_amount, interest_rate, num_payments  )
+        self.assertRaises( PaymentLogic.ExcesiveInterestError, PaymentLogic.calcPayment, purchase_amount, interest_rate, num_payments  )
+
+
+    def testPurchaseZero( self ):
+        # Entradas
+        purchase_amount = 0
+        num_payments = 60
+        interest_rate = 0.024
+
+        # Verifica en una linea si una funcion dispara una excepcion por no haber compra
+        self.assertRaises( PaymentLogic.InvalidPurchaseException, PaymentLogic.calcPayment, purchase_amount, interest_rate, num_payments  )
 
 # Este fragmento de codigo permite ejecutar la prueb individualmente
 # Va fijo en todas las pruebas
