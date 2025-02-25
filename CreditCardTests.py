@@ -54,6 +54,16 @@ class CreditCardTest(unittest.TestCase):
         # Verifica en una linea si una funcion dispara una excepcion
         self.assertRaises( PaymentLogic.ExcesiveInterestError, PaymentLogic.calcPayment, purchase_amount, interest_rate, num_payments  )
 
+    def testExcesiveInterestWith( self ):
+        # Entradas
+        purchase_amount = 50000
+        num_payments = 36
+        interest_rate = 0.124
+
+        # Verifica en una linea si una funcion dispara una excepcion
+        with self.assertRaises( PaymentLogic.ExcesiveInterestError ):
+            PaymentLogic.calcPayment( purchase_amount, interest_rate, num_payments )
+
 
     def testPurchaseZero( self ):
         # Entradas
