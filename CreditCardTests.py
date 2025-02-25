@@ -26,6 +26,7 @@ class CreditCardTest(unittest.TestCase):
         # Prueba que dos variables sean iguales
         self.assertAlmostEqual( expected, result, 2  )
 
+    # Prueba capturando manualmente la excepcion
     def testExcesiveInterest( self ):
         # Entradas
         purchase_amount = 50000
@@ -45,6 +46,7 @@ class CreditCardTest(unittest.TestCase):
 
         self.assertTrue(  testOk, "No se disparó la excepcion esperada" )            
 
+    # Prueba usando assertRaises y pasando por parametro la funcion y sus argumentos
     def testExcesiveInterestOneLine( self ):
         # Entradas
         purchase_amount = 50000
@@ -54,6 +56,7 @@ class CreditCardTest(unittest.TestCase):
         # Verifica en una linea si una funcion dispara una excepcion
         self.assertRaises( PaymentLogic.ExcesiveInterestError, PaymentLogic.calcPayment, purchase_amount, interest_rate, num_payments  )
 
+    # Prueba usando assertRaises y un bloque with para detectar la excepcion
     def testExcesiveInterestWith( self ):
         # Entradas
         purchase_amount = 50000
@@ -72,7 +75,8 @@ class CreditCardTest(unittest.TestCase):
         interest_rate = 0.024
 
         # Verifica en una linea si una funcion dispara una excepcion por no haber compra
-        self.assertRaises( PaymentLogic.InvalidPurchaseException, PaymentLogic.calcPayment, purchase_amount, interest_rate, num_payments  )
+        with self.assertRaises( PaymentLogic.InvalidPurchaseException ):
+            PaymentLogic.calcPayment( purchase_amount, interest_rate, num_payments ) 
 
 # Este fragmento de codigo permite ejecutar la prueb individualmente
 # Va fijo en todas las pruebas
